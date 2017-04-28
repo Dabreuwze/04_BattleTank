@@ -47,10 +47,22 @@ bool ATankPlayerController::GetSiteRayHitLocation(FVector &OutHitLocation) const
 	int32 viewportSizeY;
 	GetViewportSize(viewportSizeX, viewportSizeY);
 	
-	FVector2D CrossHairPosition = FVector2D(viewportSizeX*CrossHairXLocation, viewportSizeY*CrossHairYLocation);
-	//"De-project" the screen position of the crosshair to a world direction
+	FVector2D CrossHairPosition=FVector2D(viewportSizeX*CrossHairXLocation, viewportSizeY*CrossHairYLocation);
 
+	//"De-project" the screen position of the crosshair to a world direction
+	FVector LookDirection;
+	if (GetLookDirection(CrossHairPosition, LookDirection)) {
+		UE_LOG(LogTemp, Warning, TEXT("Screen Projection: %s"), *LookDirection.ToString());
+	}
 	//Line trace along that direction and see what is hit (up to maximum range)
+	
+	return true;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector & LookDirection) const
+{
+	FVector WorldLocation;
+	DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, WorldLocation, LookDirection);
 	
 	return true;
 }
