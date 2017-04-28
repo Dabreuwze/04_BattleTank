@@ -19,5 +19,6 @@ public:
 	ATank* GetAIControlledTank();
 	ATank* GetPlayerTank();
 	void AimTowardsCrosshair();
+	bool GetSiteRayHitLocation(FVector) const;
 
 };

@@ -30,7 +30,6 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//AimTowardsCrossHair();
-	UE_LOG(LogTemp, Warning, TEXT("Tick-tock"));
 
 }
 
@@ -46,6 +45,11 @@ ATank * ATankAIController::GetPlayerTank()
 
 void ATankAIController::AimTowardsCrosshair()
 {
+}
+
+bool ATankAIController::GetSiteRayHitLocation(FVector) const
+{
+	return false;
 }
 
 

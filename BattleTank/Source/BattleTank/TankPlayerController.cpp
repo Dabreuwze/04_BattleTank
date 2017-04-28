@@ -18,22 +18,39 @@ void ATankPlayerController::AimTowardsCrossHair()
 {
 	if (!GetControlledTank()) { return; }
 
-	//Get World location by line trace to crosshair
-	//if it hits the landscape
-		//tell controlled tank to aim at this point
+	FVector HitLocation;//out parameter
+
+	if (GetSiteRayHitLocation(HitLocation)) {
+		//UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+		//TODO tell controlled tank to aim at this point
+	}
 }
 
+//Get World location by line trace to crosshair
+//if it hits the landscape return true
 ATank* ATankPlayerController::GetControlledTank() const {
 	ATank *PlayerTank= Cast<ATank>(GetPawn());
 
-	if (PlayerTank) {
-		UE_LOG(LogTemp, Warning, TEXT("The player is controlling %s"),*(PlayerTank->GetName()));
-	}
-	else {
+	if (!PlayerTank) {
 		UE_LOG(LogTemp, Warning, TEXT("The player tank has not been found"));
 	}
 
 	return PlayerTank;
 }
 
+bool ATankPlayerController::GetSiteRayHitLocation(FVector &OutHitLocation) const
+{
 
+//	OutHitLocation = GetWorld()->GetFirstPlayerController->GetPlayerViewPoint();
+	//Find Cross-hair position
+	int32 viewportSizeX;
+	int32 viewportSizeY;
+	GetViewportSize(viewportSizeX, viewportSizeY);
+	
+	FVector2D CrossHairPosition = FVector2D(viewportSizeX*CrossHairXLocation, viewportSizeY*CrossHairYLocation);
+	//"De-project" the screen position of the crosshair to a world direction
+
+	//Line trace along that direction and see what is hit (up to maximum range)
+	
+	return true;
+}
